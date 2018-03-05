@@ -49,8 +49,7 @@ public class WeightAlgorithm {
     static List<String> getMethodList() {
         Map<String, Integer> tempMap = new HashMap<>();
         tempMap.putAll(methodMap);
-        Set<String> keySet = tempMap.keySet();
-        Iterator<String> iterator = keySet.iterator();
+        Iterator<String> iterator = tempMap.keySet().iterator();
         List<String> methodList = new ArrayList<>();
         while (iterator.hasNext()) {
             String method = iterator.next();

@@ -22,23 +22,62 @@ public final class QuickSort {
     public static void quickSort(int[] arr) {
         if (null == arr || arr.length < 0)
             return;
-        sort(arr, 0, arr.length - 1);
+        execSort1(arr, 0, arr.length - 1);
     }
 
     /**
-     * 递归执行排序操作
+     * 递归执行排序操作，最坏的情况：空间复杂度是 O(n)
      *
      * @param arr
      * @param left
      * @param right
      */
-    private static void sort(int[] arr, int left, int right) {
+    private static void execSort1(int[] arr, int left, int right) {
         if (left >= right)
             return;
         int index = partitionMid(arr, left, right);
         //按基准点的位置，将数组拆分为两个子序列再进行排序
-        sort(arr, left, index - 1);
-        sort(arr, index + 1, right);
+        execSort1(arr, left, index - 1);
+        execSort1(arr, index + 1, right);
+    }
+
+    /**
+     * 使用尾递归优化，分割成两个序列时，只对其中一个递归进去，
+     * 另一个序列仍可以在这一函数内继续划分，可以显著减小栈的大小
+     * 最坏的情况空间复杂度仍然可能为 O(n)
+     *
+     * @param arr
+     * @param left
+     * @param right
+     */
+    private static void execSort2(int[] arr, int left, int right) {
+        while (left < right) {
+            int index = partitionMid(arr, left, right);
+            //按基准点的位置，将数组拆分为两个子序列再进行排序
+            execSort2(arr, left, index - 1);
+            left = index + 1;
+        }
+    }
+
+    /**
+     * 在尾递归的基础上再进行优化，使得每次都对包含数组元素较少的那一个划分部分进行递归调用
+     * 在最坏情况下，快速排序的空间复杂度就会降低到 O(logn)
+     *
+     * @param arr
+     * @param left
+     * @param right
+     */
+    private static void execSort3(int[] arr, int left, int right) {
+        while (left < right) {
+            int index = partitionMid(arr, left, right);
+            if (index - left < right - index) {
+                execSort3(arr, left, index - 1);
+                left = index + 1;
+            } else {
+                execSort3(arr, index + 1, right);
+                right = index - 1;
+            }
+        }
     }
 
     /**
