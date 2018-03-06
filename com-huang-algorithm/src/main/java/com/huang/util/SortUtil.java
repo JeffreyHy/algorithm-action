@@ -1,4 +1,4 @@
-package com.huang.sort;
+package com.huang.util;
 
 /**
  * @author JeffreyHy
