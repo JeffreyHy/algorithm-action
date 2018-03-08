@@ -73,7 +73,7 @@ public final class LongestIncreasingSubSequence {
      * 算法的关键点：当产生长度相同递增子序列时，需要选择最小末端对应的子序列，
      * 末端比较大的子序列被抛弃，这很好理解，向后遍历源数组是，更小末端更有可能产生长度更长的递增子序列
      * <p>
-     * 时间复杂度O（N^2）
+     * 时间复杂度O（N^2），向maxV中插入元素的时间复杂度为N
      *
      * @param array
      * @return
@@ -92,19 +92,17 @@ public final class LongestIncreasingSubSequence {
         for (int i = 1; i < array.length; i++) {
             int j = maxSubSeq;
             for (; j >= 0; j--) {
-                if (array[i] > maxV[j]) {
+                if (array[i] > maxV[j]) {//寻找array[i]在maxV的插入点
                     subSeq[i] = j + 1;
                     break;
                 }
             }
-            if (subSeq[i] > maxSubSeq) {
+            if (subSeq[i] > maxSubSeq) {//更新最大长度及其最小末端
                 maxSubSeq = subSeq[i];
                 maxV[maxSubSeq] = array[i];
             } else if (maxV[j] < array[i] && array[i] < maxV[j + 1]) {//更新长度j+1的最小末端
                 maxV[j + 1] = array[i];
-            } /*else if (subSeq[i] == maxSubSeq && maxV[maxSubSeq] > array[i]) { //只更新最大长度的最小末端
-                maxV[maxSubSeq] = array[i];
-            }*/
+            }
         }
         logger.info("The longest increasing subSequence:{}", maxSubSeq);
         logger.info("maxV:{}", Arrays.stream(maxV).mapToObj(value -> String.valueOf(value))
@@ -115,7 +113,7 @@ public final class LongestIncreasingSubSequence {
     }
 
     /**
-     * maxV中的数据改为二分查找
+     * maxV中插入数据是有序的，而且是进行替换而不需要挪动，也就是说可以使用二分查找进行优化，使得插入的时间复杂度为logn
      * 时间复杂度O（N * logn）
      *
      * @param array

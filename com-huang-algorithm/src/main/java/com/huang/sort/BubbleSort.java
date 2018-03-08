@@ -17,12 +17,24 @@ public final class BubbleSort {
     private BubbleSort() {
     }
 
-    public static void sort(int[] arr) {
+    public static void ascendingOrder(int[] arr) {
         if (null == arr || arr.length < 0)
             return;
         for (int i = 0; i < arr.length - 1; i++) {
             for (int j = arr.length - 1; j > i; j--) {
                 if (arr[j] < arr[j - 1]) { //升序
+                    SortUtil.swap(arr, j - 1, j);
+                }
+            }
+        }
+    }
+
+    public static void descendingOrder(int[] arr) {
+        if (null == arr || arr.length < 0)
+            return;
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = arr.length - 1; j > i; j--) {
+                if (arr[j] > arr[j - 1]) { //降序
                     SortUtil.swap(arr, j - 1, j);
                 }
             }

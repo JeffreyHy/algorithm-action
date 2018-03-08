@@ -15,7 +15,12 @@ public final class InsertSort {
     private InsertSort() {
     }
 
-    public static void sort(int[] arr) {
+    /**
+     * 升序
+     *
+     * @param arr
+     */
+    public static void ascendingOrder(int[] arr) {
         if (null == arr || arr.length < 0)
             return;
         for (int i = 1; i < arr.length; i++) {
@@ -23,6 +28,27 @@ public final class InsertSort {
             int target = arr[i];//待插入的元素
             //移动元素，寻找插入位置
             while (j > 0 && target < arr[j - 1]) {
+                arr[j] = arr[j - 1];
+                j--;
+            }
+            //插入
+            arr[j] = target;
+        }
+    }
+
+    /**
+     * 降序
+     *
+     * @param arr
+     */
+    public static void descendingOrder(int[] arr) {
+        if (null == arr || arr.length < 0)
+            return;
+        for (int i = 1; i < arr.length; i++) {
+            int j = i;
+            int target = arr[i];//待插入的元素
+            //移动元素，寻找插入位置
+            while (j > 0 && target > arr[j - 1]) {
                 arr[j] = arr[j - 1];
                 j--;
             }

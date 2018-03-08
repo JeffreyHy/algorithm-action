@@ -5,6 +5,9 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 /**
  * @author JeffreyHy
  * @date Created by  2018/2/24 15:23
@@ -15,11 +18,33 @@ public class SortTest extends TestCase {
     @Test
     public void testBubbleSort() {
         int arr[] = {5, 3, 6, 8, 9, 2};
-        BubbleSort.sort(arr);
-        StringBuilder builder = new StringBuilder("sort result:");
-        for (int i : arr) {
-            builder.append(i).append(",");
-        }
-        logger.info(builder.substring(0, builder.length() - 1));
+        BubbleSort.ascendingOrder(arr);
+        logger.info("ascendingOrder:{}", Arrays.stream(arr).mapToObj(value -> String.valueOf(value))
+                .collect(Collectors.joining(",")));
+        BubbleSort.descendingOrder(arr);
+        logger.info("descendingOrder:{}", Arrays.stream(arr).mapToObj(value -> String.valueOf(value))
+                .collect(Collectors.joining(",")));
+    }
+
+    @Test
+    public void testInsertSort() {
+        int arr[] = {5, 3, 6, 8, 9, 2};
+        InsertSort.ascendingOrder(arr);
+        logger.info("ascendingOrder:{}", Arrays.stream(arr).mapToObj(value -> String.valueOf(value))
+                .collect(Collectors.joining(",")));
+        InsertSort.descendingOrder(arr);
+        logger.info("descendingOrder:{}", Arrays.stream(arr).mapToObj(value -> String.valueOf(value))
+                .collect(Collectors.joining(",")));
+    }
+
+    @Test
+    public void testHeapSort() {
+        int arr[] = {5, 3, 6, 8, 9, 2};
+        HeapSort.ascendingOrder(arr);
+        logger.info("ascendingOrder:{}", Arrays.stream(arr).mapToObj(value -> String.valueOf(value))
+                .collect(Collectors.joining(",")));
+        HeapSort.descendingOrder(arr);
+        logger.info("descendingOrder:{}", Arrays.stream(arr).mapToObj(value -> String.valueOf(value))
+                .collect(Collectors.joining(",")));
     }
 }

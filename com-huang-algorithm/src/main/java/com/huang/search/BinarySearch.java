@@ -21,11 +21,11 @@ public final class BinarySearch {
      * @param left
      * @param right
      * @param key
-     * @return
+     * @return pos 适合插入的位置
      */
     public static int biSearch(int array[], int left, int right, int key) {
         int mid;
-        if (array[right] < key) {
+        if (array[right] < key) {//比最大元素还大
             return right + 1;
         }
         while (left < right) {
