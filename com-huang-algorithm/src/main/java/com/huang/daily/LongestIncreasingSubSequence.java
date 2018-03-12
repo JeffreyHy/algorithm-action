@@ -1,7 +1,7 @@
 package com.huang.daily;
 
 import com.huang.search.BinarySearch;
-import com.huang.util.ArraysUtils;
+import com.huang.util.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +51,7 @@ public final class LongestIncreasingSubSequence {
                 }
             }
         }
-        int max = ArraysUtils.max(subSeq);
+        int max = ArrayUtils.max(subSeq);
         logger.info("The longest increasing subSequence:{}", max);
         return max;
     }
@@ -82,7 +82,7 @@ public final class LongestIncreasingSubSequence {
         //记录数组的递增序列信息，下标为递增序列长度，value为对应长度的最小末端
         //最小末端：随着向后遍历数组，指定长度可能出现最更小的末端元素，这时候需要替换掉当前末端
         int[] maxV = new int[array.length + 1];
-        maxV[0] = ArraysUtils.min(array) - 1;//数组中最小值，边界
+        maxV[0] = ArrayUtils.min(array) - 1;//数组中最小值，边界
         maxV[1] = array[0];//数组中第一个值，暂定为长度为1的最小末端
         int subSeq[] = new int[array.length];
         for (int i = 0; i < subSeq.length; i++) {

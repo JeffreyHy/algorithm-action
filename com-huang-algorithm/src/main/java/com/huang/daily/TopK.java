@@ -1,6 +1,10 @@
 package com.huang.daily;
 
 import com.huang.datastructure.Heap;
+import com.huang.util.ArrayUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 问题描述：给定n个整数，求其前k大或前k小的问题，简称TOP-K问题
@@ -101,7 +105,7 @@ public final class TopK {
         Heap.buildMaxHeap(heapArray);
         for (int i = k; i < array.length; i++) {
             if (array[i] < heapArray[0]) {
-                heapArray[0] = array[i];
+                heapArray[0] = array[i];//更新堆顶
                 Heap.adjustMaxHeap(heapArray, 0, heapArray.length);
             }
         }
@@ -123,10 +127,111 @@ public final class TopK {
         Heap.buildMinHeap(heapArray);
         for (int i = k; i < array.length; i++) {
             if (array[i] > heapArray[0]) {
-                heapArray[0] = array[i];
+                heapArray[0] = array[i];//更新堆顶
                 Heap.adjustMinHeap(heapArray, 0, heapArray.length);
             }
         }
         return heapArray;
     }
+
+    /**
+     * 寻找Ｎ个数中的第Ｋ大的数,可以将问题转化寻找Ｎ个数中第K大的数的问题。对于一个给定的数p,
+     * 可以在O(N)的时间复杂度内找出所有不小于P的数。
+     * <p>
+     * 可以使用二分查找的算法来寻找Ｎ个数中第K大的数，假设N个数中最大的数为Vmax,最小的数为Vmin,
+     * 那么Ｎ个数中第K大的数一定在区间[Vmin,Vmax]之间。然后在这个区间使用二分查找算法。
+     * <p>
+     * 该算法实际应用效果不佳，尤其是不同的数据类型需要确定max - min > delta，由于delta的取值要比所有N
+     * 个数中的任意两个不想等的元素差值之最小值小，因此时间复杂度跟数据分布有关。
+     * 整个算法的时间复杂度为O(N * log（Vmax-Vmin）/delta),在数据分布平均的情况下，时间复杂度为O(N * logN)
+     *
+     * @param array
+     * @param k
+     * @return
+     */
+    public static List<Integer> findTopKMax_3(int[] array, int k) {
+        int max = ArrayUtils.max(array);
+        int min = ArrayUtils.min(array);
+        List<Integer> topKList = new ArrayList<>();
+        int key = findK(array, max, min, k);
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] >= key) {
+                topKList.add(array[i]);
+            }
+        }
+        return topKList;
+    }
+
+    /**
+     * 寻找第K大的元素
+     *
+     * @param array
+     * @param max
+     * @param min
+     * @param k
+     * @return
+     */
+    private static int findK(int[] array, int max, int min, int k) {
+        while (max - min > 1) {
+            int mid = (max + min) / 2;
+            int num = findKNum(array, mid);
+            if (num >= k) {
+                min = mid;
+            } else {
+                max = mid;
+            }
+        }
+        return min;
+    }
+
+    /**
+     * 统计不小于key的数据个数
+     *
+     * @param array
+     * @param key
+     * @return
+     */
+    private static int findKNum(int[] array, int key) {
+        int sum = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] >= key)
+                sum++;
+        }
+        return sum;
+    }
+
+    /**
+     * 对于所有N个数都是正整数，且取值范围不大，可以考虑申请空间，记录每个整数出现的次数，然后再从大到小取最大的K个。
+     * 假设所有整数都在（0，maxN）区间，利用一个数组count[maxN]来记录每个整数出现的次数。
+     * count[i]表示整数i在N个数中出现的次数。只需要扫描一遍就可以得到count数组，然后寻找第K大的元素。
+     * <p>
+     * 极端情况下，如果 N 个整数各不相同，我们甚至只需要一个 bit 来存储这个整数是否存在。
+     *
+     * @param array
+     * @param k
+     * @return
+     */
+    public static List<Integer> findTopKMax_4(int[] array, int k) {
+        int max = ArrayUtils.max(array);
+        int count[] = new int[max + 1];
+        for (int i = 0; i < array.length; i++) {
+            count[array[i]] += 1;
+        }
+        List<Integer> topKList = new ArrayList<>();
+        for (int sumCount = 0, j = count.length - 1; j >= 0; j--) {
+            int c = count[j];
+            sumCount += c;
+            if (c > 0) {
+                for (int i = 0; i < c; i++) {
+                    topKList.add(j);
+                }
+            }
+            if (sumCount >= k) {
+                break;
+            }
+
+        }
+        return topKList;
+    }
+
 }

@@ -4,8 +4,8 @@ package com.huang.util;
  * @author JeffreyHy
  * @date Created by  2018/3/6 16:29
  */
-public final class ArraysUtils {
-    private ArraysUtils() {
+public final class ArrayUtils {
+    private ArrayUtils() {
     }
 
     /**

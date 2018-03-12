@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -64,6 +65,40 @@ public class TopKTest extends TestCase {
         int array2[] = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};//升序数组
         int topK3[] = TopK.findTopKMax_2(array2, k);
         logger.info("array2 top k:{}", Arrays.stream(topK3).mapToObj(value -> String.valueOf(value))
+                .collect(Collectors.joining(",")));
+    }
+
+    @Test
+    public void testFindKMax_3() {
+        int k = 4;
+        int array[] = {20, 100, 4, 2, 87, 9, 8, 5, 46, 26};
+        List<Integer> topK = TopK.findTopKMax_3(array, k);
+        logger.info("array top k:{}", topK.stream().map(value -> String.valueOf(value))
+                .collect(Collectors.joining(",")));
+        int array1[] = {100, 90, 80, 70, 60, 50, 40, 30, 20, 10};//降序数组
+        topK = TopK.findTopKMax_3(array1, k);
+        logger.info("array top k:{}", topK.stream().map(value -> String.valueOf(value))
+                .collect(Collectors.joining(",")));
+        int array2[] = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};//升序数组
+        topK = TopK.findTopKMax_3(array2, k);
+        logger.info("array top k:{}", topK.stream().map(value -> String.valueOf(value))
+                .collect(Collectors.joining(",")));
+    }
+
+    @Test
+    public void testFindKMax_4() {
+        int k = 4;
+        int array[] = {20, 100, 4, 2, 87, 9, 8, 5, 46, 26};
+        List<Integer> topK = TopK.findTopKMax_4(array, k);
+        logger.info("array top k:{}", topK.stream().map(value -> String.valueOf(value))
+                .collect(Collectors.joining(",")));
+        int array1[] = {100, 90, 80, 70, 60, 50, 40, 30, 20, 10};//降序数组
+        topK = TopK.findTopKMax_4(array1, k);
+        logger.info("array top k:{}", topK.stream().map(value -> String.valueOf(value))
+                .collect(Collectors.joining(",")));
+        int array2[] = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};//升序数组
+        topK = TopK.findTopKMax_4(array2, k);
+        logger.info("array top k:{}", topK.stream().map(value -> String.valueOf(value))
                 .collect(Collectors.joining(",")));
     }
 
