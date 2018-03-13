@@ -84,8 +84,8 @@ public final class TopK {
     /**
      * 解法3
      * 算法思路：当数组中元素个数非常大时，如：100亿，这时候数据不能全部加载到内存，就要求我们尽可能少的遍历所有数据。
-     * 为了查找Top k大的数，我们可以使用小根堆来存储最大的K个元素。小根堆的堆顶元素就是最大K个数中最小的一个。
-     * 每次考虑下一个数x时,如果x比堆顶元素小，则不需要改变原来的堆。如果想x比堆顶元素打，那么用x替换堆顶元素，
+     * 为了查找Top k大的数，我们可以使用大根堆来存储最大的K个元素。大根堆的堆顶元素就是最大K个数中最小的一个。
+     * 每次考虑下一个数x时,如果x比堆顶元素小，则不需要改变原来的堆。如果想x比堆顶元素大，那么用x替换堆顶元素，
      * 同时，在替换之后，x可能破坏最小堆的结构，需要调整堆来维持堆的性质。
      * <p>
      * 时间复杂度：O(N * logk)
@@ -150,8 +150,16 @@ public final class TopK {
      * @return
      */
     public static List<Integer> findTopKMax_3(int[] array, int k) {
-        int max = ArrayUtils.max(array);
-        int min = ArrayUtils.min(array);
+        int max = array[0];
+        int min = array[0];
+        for (int i = 0; i < array.length; i++) {
+            if (max < array[i]) {
+                max = array[i];
+            }
+            if (min > array[i]) {
+                min = array[i];
+            }
+        }
         List<Integer> topKList = new ArrayList<>();
         int key = findK(array, max, min, k);
         for (int i = 0; i < array.length; i++) {
