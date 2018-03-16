@@ -47,4 +47,22 @@ public class SortTest extends TestCase {
         logger.info("descendingOrder:{}", Arrays.stream(arr).mapToObj(value -> String.valueOf(value))
                 .collect(Collectors.joining(",")));
     }
+
+
+    @Test
+    public void testQuickSort() {
+        int arr[] = {5, 3, 6, 8, 9, 2};
+        QuickSort.ascendingOrder(arr);
+        logger.info("ascendingOrder:{}", Arrays.stream(arr).mapToObj(value -> String.valueOf(value))
+                .collect(Collectors.joining(",")));
+    }
+
+    @Test
+    public void testQuickSort3Ways() {
+        int arr[] = {6, 4, 4, 5, 4, 4};
+        QuickSort.quickSort3Ways(arr);
+        logger.info("quickSort3Ways:{}", Arrays.stream(arr).mapToObj(value -> String.valueOf(value))
+                .collect(Collectors.joining(",")));
+    }
+
 }
