@@ -109,10 +109,10 @@ public final class QuickSort {
         int pivotKey = arr[left];//基准点
         int pivotPointer = left;//基准点的位置
         while (left < right) {
-            while (left < right && arr[right] >= pivotKey) {//从右边开始查找大于基准点的元素
+            while (left < right && arr[right] >= pivotKey) {//从右边开始查找小于基准点的元素
                 right--;
             }
-            while (left < right && arr[left] <= pivotKey) {//从左边开始查找小于基准点的元素
+            while (left < right && arr[left] <= pivotKey) {//从左边开始查找大于基准点的元素
                 left++;
             }
             SortUtil.swap(arr, left, right);//交换位置，大的交换到右边，把小的交换到左边
@@ -123,7 +123,7 @@ public final class QuickSort {
 
     /**
      * 该方法比partitionV1效率更高
-     * 划分操作，先移动右指针，遇到大于基准点的元素，停止，交换左指针和右指针指向的元素；再移动左指针，遇到小于基准点的元素，停止，
+     * 划分操作，先移动右指针，遇到小于基准点的元素，停止，交换左指针和右指针指向的元素；再移动左指针，遇到大于基准点的元素，停止，
      * 交换右指针和左指针指向的元素；循环，直到left>=right；最后修改左指针指向的元素为基准点
      *
      * @param arr

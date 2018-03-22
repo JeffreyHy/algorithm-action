@@ -21,7 +21,7 @@ public class QuestionOfJoseph {
      * @param n 出局者的编号
      */
     public static void joseph(int m, int n) {
-        int a[] = new int[m];
+        int[] a = new int[m];
         for (int i = 0; i < a.length; i++) {
             a[i] = i + 1;
         }

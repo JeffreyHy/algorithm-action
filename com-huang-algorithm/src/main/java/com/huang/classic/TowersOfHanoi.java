@@ -29,9 +29,12 @@ public class TowersOfHanoi {
         if (1 == n) {
             logger.info("{}->{}", x, z);
         } else {
-            move(n - 1, x, z, y);//将n-1个盘子从x借助z移动到y
-            logger.info("{}->{}", x, z);//将第n个盘子从x移到z
-            move(n - 1, y, x, z);//将n-1个盘子从y借助x移到z
+            //将n-1个盘子从x借助z移动到y
+            move(n - 1, x, z, y);
+            //将第n个盘子从x移到z
+            logger.info("{}->{}", x, z);
+            //将n-1个盘子从y借助x移到z
+            move(n - 1, y, x, z);
         }
     }
 }

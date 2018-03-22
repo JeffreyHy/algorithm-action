@@ -11,15 +11,21 @@ import com.huang.util.SortUtil;
  */
 public class QuickSort3WaysAction {
     /**
+     * 数组最小长度
+     */
+    public static final int ARRAY_MIN_LEN = 2;
+
+    /**
      * 计数排序实现
      * 需要经历四次遍历，时间复杂度O(n)
      *
      * @param arr
      */
-    public static void countSort(int arr[]) {
-        if (null == arr || arr.length < 2)
+    public static void countSort(int[] arr) {
+        if (null == arr || arr.length < ARRAY_MIN_LEN) {
             return;
-        int count[] = new int[3];
+        }
+        int[] count = new int[3];
         for (int i = 0; i < arr.length; i++) {
             assert (arr[i] >= 0 && arr[i] <= 2);
             count[arr[i]] += 1;
@@ -41,7 +47,7 @@ public class QuickSort3WaysAction {
      *
      * @param arr
      */
-    public static void quickSort3Ways(int arr[]) {
+    public static void quickSort3Ways(int[] arr) {
         int left = 0;
         int i = 0;
         int right = arr.length - 1;
@@ -49,10 +55,12 @@ public class QuickSort3WaysAction {
             if (arr[i] == 1) {
                 i++;
             } else if (arr[i] == 0) {
-                SortUtil.swap(arr, left++, i++);//交换到坐端
+                //交换到左端
+                SortUtil.swap(arr, left++, i++);
             } else {
                 assert (arr[i] == 2);
-                SortUtil.swap(arr, i, right--);//交换到右端
+                //交换到右端
+                SortUtil.swap(arr, i, right--);
             }
         }
     }

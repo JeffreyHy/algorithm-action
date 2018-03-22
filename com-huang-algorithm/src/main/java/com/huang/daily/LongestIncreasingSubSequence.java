@@ -41,11 +41,13 @@ public final class LongestIncreasingSubSequence {
      * @param array
      * @return
      */
-    public static int getSubSeq_1(int[] array) {
+    public static int getSubSeqV1(int[] array) {
         int[] subSeq = new int[array.length];
         for (int i = 0; i < array.length; i++) {
-            subSeq[i] = 1; //初始化默认长度
-            for (int j = 0; j < i; j++) { //寻找i前面最长的序列
+            //初始化默认长度
+            subSeq[i] = 1;
+            for (int j = 0; j < i; j++) {
+                //寻找i前面最长的序列
                 if (array[i] > array[j] && subSeq[j] + 1 > subSeq[i]) {
                     subSeq[i] = subSeq[j] + 1;
                 }
@@ -78,29 +80,37 @@ public final class LongestIncreasingSubSequence {
      * @param array
      * @return
      */
-    public static int getSubSeq_2(int[] array) {
-        //记录数组的递增序列信息，下标为递增序列长度，value为对应长度的最小末端
-        //最小末端：随着向后遍历数组，指定长度可能出现最更小的末端元素，这时候需要替换掉当前末端
+    public static int getSubSeqV2(int[] array) {
+        /**
+         * 记录数组的递增序列信息，下标为递增序列长度，value为对应长度的最小末端
+         * 最小末端：随着向后遍历数组，指定长度可能出现最更小的末端元素，这时候需要替换掉当前末端
+         */
         int[] maxV = new int[array.length + 1];
-        maxV[0] = ArrayUtils.min(array) - 1;//数组中最小值，边界
-        maxV[1] = array[0];//数组中第一个值，暂定为长度为1的最小末端
-        int subSeq[] = new int[array.length];
+        //数组中最小值，边界
+        maxV[0] = ArrayUtils.min(array) - 1;
+        //数组中第一个值，暂定为长度为1的最小末端
+        maxV[1] = array[0];
+        int[] subSeq = new int[array.length];
         for (int i = 0; i < subSeq.length; i++) {
             subSeq[i] = 1;
         }
-        int maxSubSeq = 1;//数组最长递增子序列的长度
+        //数组最长递增子序列的长度
+        int maxSubSeq = 1;
         for (int i = 1; i < array.length; i++) {
             int j = maxSubSeq;
             for (; j >= 0; j--) {
-                if (array[i] > maxV[j]) {//寻找array[i]在maxV的插入点
+                if (array[i] > maxV[j]) {
+                    //寻找array[i]在maxV的插入点
                     subSeq[i] = j + 1;
                     break;
                 }
             }
-            if (subSeq[i] > maxSubSeq) {//更新最大长度及其最小末端
+            if (subSeq[i] > maxSubSeq) {
+                //更新最大长度及其最小末端
                 maxSubSeq = subSeq[i];
                 maxV[maxSubSeq] = array[i];
-            } else if (maxV[j] < array[i] && array[i] < maxV[j + 1]) {//更新长度j+1的最小末端
+            } else if (maxV[j] < array[i] && array[i] < maxV[j + 1]) {
+                //更新长度j+1的最小末端
                 maxV[j + 1] = array[i];
             }
         }
@@ -119,10 +129,12 @@ public final class LongestIncreasingSubSequence {
      * @param array
      * @return
      */
-    public static int getSubSeq_3(int[] array) {
+    public static int getSubSeqV3(int[] array) {
         int[] maxV = new int[array.length + 1];
-        maxV[1] = array[0];//数组中第一个值，暂定为长度为1的最小末端
-        int maxSubSeq = 1;//数组最长递增子序列的长度
+        //数组中第一个值，暂定为长度为1的最小末端
+        maxV[1] = array[0];
+        //数组最长递增子序列的长度
+        int maxSubSeq = 1;
         int pos;
         for (int i = 1; i < array.length; i++) {
             pos = BinarySearch.biSearch(maxV, 1, maxSubSeq, array[i]);
